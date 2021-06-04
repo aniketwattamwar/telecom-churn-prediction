@@ -1,0 +1,151 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telecom Churn App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
+    <link rel="stylesheet" href="static/css/styles.min.css">
+</head>
+
+<body>
+    <div>
+        <nav class="navbar navbar-light navbar-expand-md navigation-clean">
+            <div class="container"><a class="navbar-brand" href="#">HACKERSHRINE</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse"
+                    id="navcol-1">
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="https://hackershrine.com/" target="_blank">HackerShrine</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="https://www.kaggle.com/aniketwattamwar/telecom-user-churn" target="_blank">KaggleNotebook</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="https://www.youtube.com/channel/UC0ZCXAvGOg5fDyw0Xu-_PCw" target="_blank">YouTube</a></li>
+                        <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Dropdown </a>
+                            <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="#">First Item</a><a class="dropdown-item" role="presentation" href="#">Second Item</a><a class="dropdown-item" role="presentation" href="#">Third Item</a></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="article-clean">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-xl-8 offset-lg-1 offset-xl-2">
+                    <div class="intro">
+                        <h1 class="text-center" style="font-family:ABeeZee, sans-serif;">Telecom Churn Prediction</h1>
+                        <p class="text-center"> <a href="#" style="font-size:18px;font-family:ABeeZee, sans-serif;">Kaggle Problem</a></p>
+                    </div>
+                    <div class="text">
+                        <p><br>You are provided with a dataset from a telecommunications company. The data contains information about almost six thousand users, their demographic characteristics, the services they use, the duration of using the operator's
+                            services, the method of payment, and the amount of payment.<br><br>The task is to analyze the data and predict the churn of users (to identify people who will and will not renew their contract).<br><br></p>
+                        <h2>Data</h2>
+                    
+                        <div class="container" style="overflow-x:auto;">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>customerID</th>
+                                        <th>Gender</th>
+                                        <th>SeniorCitizen</th>
+                                        <th>Partner</th>
+                                        <th>Dependents</th>
+                                        <th>tenure</th>
+                                        <th>PhoneService</th>
+                                        <th>MultipleLines</th>
+                                        <th>InternetService</th>
+                                        <th>OnlineSecurity<th> 
+                                        <th>DeviceProtection</th>
+                                        <th>TechSupport</th>
+                                        <th>StreamingTV</th>
+                                        <th>StreamingMovies</th>
+                                        <th>Contract</th>
+                                        <th>PaperlessBilling</th>
+                                        <th>PaymentMethod</th>
+                                        <th>MonthlyCharges</th>
+                                        <th>TotalCharges</th>
+                                        <th>Churn</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if d %}  
+                                    {% for i in d %}
+                                    <tr>
+                                        <td>{{i.No}}</td>
+                                        <td>{{i.customerID}}</td>
+                                        <td>{{i.gender}}</td>
+                                        <td>{{i.SeniorCitizen}}</td>
+                                        <td>{{i.Partner}}</td>
+                                        <td>{{i.Dependents}}</td>
+                                        <td>{{i.tenure}}</td>
+                                        <td>{{i.PhoneService}}</td>
+                                        <td>{{i.MultipleLines}}</td>
+                                        <td>{{i.InternetService}}</td>
+                                        <td>{{i.OnlineSecurity}}</td>
+                                        <td>{{i.OnlineBackup}}</td>
+                                        <td>{{i.DeviceProtection}}</td>
+                                        <td>{{i.TechSupport}}</td>
+                                        <td>{{i.StreamingTV}}</td>
+                                        <td>{{i.StreamingMovies}}</td>
+                                        <td>{{i.Contract}}</td>
+                                        <td>{{i.PaperlessBilling}}</td>
+                                        <td>{{i.PaymentMethod}}</td>
+                                        <td>{{i.MonthlyCharges}}</td>
+                                        <td>{{i.TotalCharges}}</td>
+                                        <td>{{i.Churn}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                       
+                          
+                        <form action="/train" method="POST">
+                            {% csrf_token %} 
+                        
+                            <h2>Choose algorithm</h2>
+                        <button class="btn btn-success" type="submit" name = "logit">Logit</button>
+                        <button class="btn btn-success" type="submit" name="xgb" style="margin:0;margin-left:16px;">XGBoost</button>
+                        </form>
+                            
+                        
+
+                        <h2>Download Predictions</h2>
+                        <form action="/predict" method="POST">
+                            {% csrf_token %} 
+                            <button class="btn btn-success" type="submit" name="lg">Logistic regression</button>
+                            <button class="btn btn-success" type="submit" name="xg" style="margin-left:16px;">XGBoost</button>
+                        </form>
+                        
+                        
+                        <form action="/eval" method="POST">
+                            {% csrf_token %} 
+                            <h2>Evaluation Metrics</h2>
+                            <button class="btn btn-success" type="submit" name='metric'>Show Metrics</button>
+                            <h3>
+                            Accuracy: {{accuracy}}
+                            </h3>
+                            <h3> F1 Score: {{f1}}</h3>
+                            
+                        </form>
+
+                           
+                        
+                        <figure></figure>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
