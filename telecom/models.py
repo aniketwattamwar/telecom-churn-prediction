@@ -37,8 +37,7 @@ def training(request):
 
     if 'xgb' in request.POST:
         from xgboost import XGBClassifier
-        xgb = XGBClassifier(learning_rate = 0.01,n_estimators=1000)
-        xgb.fit(X_train, y_train)
+        xgb = XGBClassifier(learning_rate = 0.01,n_estimators=1000).fit(X_train, y_train)
         file_name = 'xgb.sav'
         pickle.dump(xgb,open(file_name,'wb'))
         return render(request,'index.html')
