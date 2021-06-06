@@ -35,6 +35,13 @@ def training(request):
          
         return render(request,'index.html')
 
+    if 'xgb' in request.POST:
+        from xgboost import XGBClassifier
+        xgb = XGBClassifier(learning_rate = 0.01,n_estimators=1000)
+        xgb.fit(X_train, y_train)
+        file_name = 'xgb.sav'
+        pickle.dump(xgb,open(file_name,'wb'))
+        return render(request,'index.html')
 
 def testing(request):
     if 'lg' in request.POST:
@@ -46,17 +53,31 @@ def testing(request):
         y_pred = pd.DataFrame(y_pred,columns=['output'])
         y_pred.to_csv('lg.csv')
         
-        
         filename = 'lg.csv'
         response = HttpResponse(open(filename, 'rb').read(), content_type='text/csv')               
         response['Content-Length'] = os.path.getsize(filename)
         response['Content-Disposition'] = 'attachment; filename=%s' % 'lg.csv'
         return response
-        # return render(request,'index.html',pred,response)
+    
+    if 'xg' in request.POST:
+        filename = 'xgb.sav'
+        loaded_model = pickle.load(open(filename, 'rb'))
+        y_pred = loaded_model.predict(X_test)
+        
+        print(y_pred)
+        y_pred = pd.DataFrame(y_pred,columns=['output'])
+        y_pred.to_csv('xgb.csv')
+        
+        f = 'xgb.csv'
+        response = HttpResponse(open(f, 'rb').read(), content_type='text/csv')               
+        response['Content-Length'] = os.path.getsize(f)
+        response['Content-Disposition'] = 'attachment; filename=%s' % 'xgb.csv'
+        return response
 
 def eval(request):
-     if 'metric' in request.POST:
-         
+
+    if 'metric' in request.POST:
+
         loaded_model = pickle.load(open('lg.sav', 'rb'))
         y_pred = loaded_model.predict(X_test)
         
@@ -70,4 +91,20 @@ def eval(request):
         print(acc)
         # print(m['f1'])
         return render(request,'index.html',f)
+
+    if 'xg_metric' in request.POST:
+        loaded_model = pickle.load(open('xgb.sav', 'rb'))
+        y_pred = loaded_model.predict(X_test)
+        
+        from sklearn.metrics import accuracy_score, precision_score,f1_score
+        acc = accuracy_score(y_pred,y_test)
+        f1 = f1_score(y_test, y_pred, average='macro')
+        f = {
+            'accuracy':acc,
+            'f1':f1
+        }
+        print(acc)
+        # print(m['f1'])
+        return render(request,'index.html',f)
+
 

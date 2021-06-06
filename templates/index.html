@@ -16,16 +16,16 @@
 <body>
     <div>
         <nav class="navbar navbar-light navbar-expand-md navigation-clean">
-            <div class="container"><a class="navbar-brand" href="#">HACKERSHRINE</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="container"><a class="navbar-brand" href="https://github.com/aniketwattamwar/telecom-churn-prediction">GitHub</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse"
                     id="navcol-1">
                     <ul class="nav navbar-nav ml-auto">
                         <li class="nav-item" role="presentation"><a class="nav-link" href="https://hackershrine.com/" target="_blank">HackerShrine</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link" href="https://www.kaggle.com/aniketwattamwar/telecom-user-churn" target="_blank">KaggleNotebook</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link" href="https://www.youtube.com/channel/UC0ZCXAvGOg5fDyw0Xu-_PCw" target="_blank">YouTube</a></li>
-                        <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Dropdown </a>
+                        <!-- <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Dropdown </a>
                             <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="#">First Item</a><a class="dropdown-item" role="presentation" href="#">Second Item</a><a class="dropdown-item" role="presentation" href="#">Third Item</a></div>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>
@@ -110,7 +110,7 @@
                             {% csrf_token %} 
                         
                             <h2>Choose algorithm</h2>
-                        <button class="btn btn-success" type="submit" name = "logit">Logit</button>
+                        <button class="btn btn-success" type="submit" name = "logit">Logistic Regression</button>
                         <button class="btn btn-success" type="submit" name="xgb" style="margin:0;margin-left:16px;">XGBoost</button>
                         </form>
                             
@@ -127,7 +127,8 @@
                         <form action="/eval" method="POST">
                             {% csrf_token %} 
                             <h2>Evaluation Metrics</h2>
-                            <button class="btn btn-success" type="submit" name='metric'>Show Metrics</button>
+                            <button class="btn btn-success" type="submit" name='metric'>Show LG Metrics</button>
+                            <button class="btn btn-success" type="submit" name='xg_metric'>Show XGB Metrics</button>
                             <h3>
                             Accuracy: {{accuracy}}
                             </h3>
